@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 
 import { ReactMic } from "react-mic";
@@ -56,6 +56,8 @@ export default function ClasseMessageChamp(props) {
     console.log(`Contenu : ${contenu}`);
     console.log(contenu);
     console.log(`Audio Source : ${audioSrc}`);
+
+    const dummy = useRef(null);
 
     const startRecording = () => {
         setAudioSrc('');
@@ -259,6 +261,12 @@ export default function ClasseMessageChamp(props) {
 
     }, []);
 
+    useEffect(() => {
+        if (dummy.current) {
+            dummy.current.scrollTop = dummy.current.scrollHeight;
+        }
+    }, [messages]);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -338,7 +346,7 @@ export default function ClasseMessageChamp(props) {
                     </div>
                 </div>
             </div>
-            <div class="chat-body">
+            <div class="chat-body" ref={dummy}>
                 {loading &&
                     <div class="d-flex align-items-center justify-content-center" style={{ height: '63vh' }}>
                         <img src={instituion} style={{ height: '60%' }} />
@@ -359,7 +367,7 @@ export default function ClasseMessageChamp(props) {
                                                 <li class="message-item friend">
                                                     <figure className="me-2">
                                                         <ChatProfilePicture name={`${messageSender.nom} ${messageSender.prenom}`} />
-    
+
                                                     </figure>                                            <div class="content">
                                                         <div class="message">
                                                             <div class="bubble">
@@ -369,12 +377,12 @@ export default function ClasseMessageChamp(props) {
                                                         </div>
                                                     </div>
                                                 </li>
-    
+
                                             )
                                         }
                                         else {
                                             if (message.tuteur_id == loggedIn) {
-    
+
                                                 return (
                                                     <li class="message-item me">
                                                         <div class="content">
@@ -386,7 +394,7 @@ export default function ClasseMessageChamp(props) {
                                                             </div>
                                                         </div>
                                                     </li>
-    
+
                                                 )
                                             }
                                             else {
@@ -395,7 +403,7 @@ export default function ClasseMessageChamp(props) {
                                                     <li class="message-item friend">
                                                         <figure className="me-2">
                                                             <ChatProfilePicture name={`${messageSender.nom} ${messageSender.prenom}`} />
-    
+
                                                         </figure>
                                                         <div class="content">
                                                             <div class="message">
@@ -431,7 +439,7 @@ export default function ClasseMessageChamp(props) {
                                                 <li class="message-item friend">
                                                     <figure className="me-2">
                                                         <ChatProfilePicture name={`${messageSender.nom} ${messageSender.prenom}`} />
-    
+
                                                     </figure>
                                                     <div class="content">
                                                         <div class="message">
@@ -455,7 +463,7 @@ export default function ClasseMessageChamp(props) {
                                                 <li class="message-item friend">
                                                     <figure className="me-2">
                                                         <ChatProfilePicture name={`${messageSender.nom} ${messageSender.prenom}`} />
-    
+
                                                     </figure>                                            <div class="content">
                                                         <div class="message">
                                                             <div >
@@ -466,12 +474,12 @@ export default function ClasseMessageChamp(props) {
                                                         </div>
                                                     </div>
                                                 </li>
-    
+
                                             )
                                         }
                                         else {
                                             if (message.tuteur_id == loggedIn) {
-    
+
                                                 return (
                                                     <li class="message-item me">
                                                         <div class="content">
@@ -483,7 +491,7 @@ export default function ClasseMessageChamp(props) {
                                                             </div>
                                                         </div>
                                                     </li>
-    
+
                                                 )
                                             }
                                             else {
@@ -492,7 +500,7 @@ export default function ClasseMessageChamp(props) {
                                                     <li class="message-item friend">
                                                         <figure className="me-2">
                                                             <ChatProfilePicture name={`${messageSender.nom} ${messageSender.prenom}`} />
-    
+
                                                         </figure>
                                                         <div class="content">
                                                             <div class="message">
@@ -528,7 +536,7 @@ export default function ClasseMessageChamp(props) {
                                                 <li class="message-item friend">
                                                     <figure className="me-2">
                                                         <ChatProfilePicture name={`${messageSender.nom} ${messageSender.prenom}`} />
-    
+
                                                     </figure>
                                                     <div class="content">
                                                         <div class="message">
@@ -541,7 +549,7 @@ export default function ClasseMessageChamp(props) {
                                                 </li>
                                             )
                                         }
-                                    } 
+                                    }
                                 }
                             })
                         }

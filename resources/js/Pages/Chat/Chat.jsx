@@ -1,12 +1,7 @@
-import { usePage } from "@inertiajs/react";
+import { usePage, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-
-import { ReactMic } from "react-mic";
-import Avatar from "react-avatar";
-
-import logo from "../assets/images/logo.jpg"
 
 import ClasseMessageChamp from "./ClasseMessageChamp";
 import PrivateMessageChamp from "./PrivateMessageChamp";
@@ -21,10 +16,10 @@ export default function Chat() {
 
     const user = usePage().props.auth.user;
     const type = user.user_type;
-    // const joined = user.created_at.split(' ');
-    // const joined = user.created_at;$
     const [datePart, timePart] = user.created_at.split(" ");
     const [year, month, day] = datePart.split("-");
+
+    const {post} = useForm();
 
 
     const [discussionC, setDiscussionC] = useState([]);
@@ -99,7 +94,7 @@ export default function Chat() {
                           });
                         setDiscussionP(uniqueArray);
                     }
-                    
+
                     setLoading(false);
                 })
                 .catch((err) => {
@@ -132,7 +127,7 @@ export default function Chat() {
         setAudioSrc(recordedBlob.blobURL);
     };
 
-    
+
 
 
     const handleSearch = (event) => {
@@ -147,17 +142,17 @@ export default function Chat() {
 
         if(type == 'Tuteur')
         {
-            const DPfilteredResults = discussionP.filter((item) => 
+            const DPfilteredResults = discussionP.filter((item) =>
                 item.professeur.nom.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
-                item.professeur.prenom.toLowerCase().startsWith(searchTerm.toLowerCase()) 
+                item.professeur.prenom.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
         setDPSearchResults(DPfilteredResults);
         }
         if(type == 'Professeur')
         {
-            const DPfilteredResults = discussionP.filter((item) => 
+            const DPfilteredResults = discussionP.filter((item) =>
             item.tuteur.nom.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
-            item.tuteur.prenom.toLowerCase().startsWith(searchTerm.toLowerCase()) 
+            item.tuteur.prenom.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
         setDPSearchResults(DPfilteredResults);
         }
@@ -250,13 +245,38 @@ export default function Chat() {
                                                 <div class="aside-header">
                                                     <div
                                                         class="d-flex justify-content-between align-items-center pb-2 mb-2">
-                                                        <div class="d-flex align-items-center">
+                                                        <div class="d-flex align-items-center justify-content-start w-100">
                                                             <figure class="me-2 mb-0">
                                                                 <UserProfilePicture name={`${user.nom} ${user.prenom}`} />
                                                             </figure>
                                                             <div>
                                                                 <h6>{`${user.nom} ${user.prenom}`}</h6>
                                                                 <p class="text-muted tx-13">{`Joined ${year}/${month}`}</p>
+                                                            </div>
+                                                            <div className="ms-auto d-flex align-items-center me-n1">
+                                                                <button
+                                                                    className=" me-0 me-sm-3 btn btn-icon rounded ms-2"
+                                                                    style={{borderColor: 'white'}}
+                                                                    data-bs-toggle="tooltip" data-bs-title="Log Out"
+                                                                    onClick={() => {
+                                                                        post(route('logout'))
+                                                                    }}>
+                                                                    <svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        width="16"
+                                                                        height="16"
+                                                                        viewBox="0 0 24 24"
+                                                                        fill="none"
+                                                                    >
+                                                                        <path
+                                                                            stroke="currentColor"
+                                                                            strokeLinecap="round"
+                                                                            strokeLinejoin="round"
+                                                                            strokeWidth="2"
+                                                                            d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8m4-9-4-4m4 4-4 4m4-4H9"
+                                                                        />
+                                                                    </svg>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -314,7 +334,7 @@ export default function Chat() {
                                                                                             setAssignedC(false)
                                                                                             setDiscussionPrivate(discussion)
                                                                                             setAssignedP(true)
-                                                                            
+
 
                                                                                         }}
                                                                                     >
