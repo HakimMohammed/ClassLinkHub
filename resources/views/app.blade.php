@@ -20,10 +20,9 @@
     <script src="{{ asset('assets/vendors/core/core.js') }}"></script>
 
 
-
     <link href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/css/demo1/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
     <script src="{{ asset('assets/js/template.js') }}"></script>
     <script src="{{ asset('assets/js/chat.js') }}"></script>
